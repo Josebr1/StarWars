@@ -1,4 +1,4 @@
-﻿namespace StarWars.Core.Models
+namespace StarWars.Core.Models
 {
     public class Human : Character
     {

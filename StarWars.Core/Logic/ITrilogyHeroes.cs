@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using StarWars.Core.Models;
 
 namespace StarWars.Core.Logic

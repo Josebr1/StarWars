@@ -1,4 +1,4 @@
-﻿namespace StarWars.Api.Models
+namespace StarWars.Api.Models
 {
     public class Droid : Character
     {

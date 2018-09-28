@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using GraphQL.Types;
 using StarWars.Core.Logic;
 
@@ -6,26 +6,28 @@ namespace StarWars.Api.Models
 {
     public class StarWarsQuery : ObjectGraphType
     {
+        
         public StarWarsQuery() { }
 
-        public StarWarsQuery(ITrilogyHeroes trilogyHeroes, Core.Data.IDroidRepository droidRepository, Core.Data.IHumanRepository humanRepository, IMapper mapper)
+        public StarWarsQuery(ITrilogyHeroes trilogyHeroes, Core.Data.IDroidRepository droidRepository,
+            Core.Data.IHumanRepository humanRepository, IMapper mapper)
         {
             Name = "Query";
-
+            
             Field<CharacterInterface>(
-              "hero",
-              arguments: new QueryArguments(
+                "hero",
+                arguments: new QueryArguments(
                     new QueryArgument<EpisodeEnum> { Name = "episode", Description = "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode." }
-              ),
-              resolve: context =>
-              {
-                  var episode = context.GetArgument<Episodes?>("episode");
-                  var character = trilogyHeroes.GetHero((int?)episode).Result;
-                  var hero = mapper.Map<Character>(character);
-                  return hero;
-              }
+                ),
+                resolve: context =>
+                {
+                    var episode = context.GetArgument<Episodes?>("episode");
+                    var character = trilogyHeroes.GetHero((int?)episode).Result;
+                    var hero = mapper.Map<Character>(character);
+                    return hero;
+                }
             );
-
+            
             Field<HumanType>(
                 "human",
                 arguments: new QueryArguments(
@@ -39,6 +41,7 @@ namespace StarWars.Api.Models
                     return mapped;
                 }
             );
+            
             Field<DroidType>(
                 "droid",
                 arguments: new QueryArguments(
@@ -53,5 +56,6 @@ namespace StarWars.Api.Models
                 }
             );
         }
+        
     }
 }

@@ -1,18 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using StarWars.Core.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using StarWars.Core.Data;
 
 namespace StarWars.Data.EntityFramework.Repositories
 {
-    public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>, new()
+    public abstract class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>, new()
     {
+
         protected DbContext _db;
         protected readonly ILogger _logger;
-
+        
         protected BaseRepository() { }
 
         protected BaseRepository(DbContext db, ILogger logger)
@@ -20,8 +20,8 @@ namespace StarWars.Data.EntityFramework.Repositories
             _db = db;
             _logger = logger;
         }
-
-        public virtual Task<List<TEntity>> GetAll()
+        
+        public Task<List<TEntity>> GetAll()
         {
             _logger.LogInformation("Get all {type}s", typeof(TEntity).Name);
             return _db.Set<TEntity>().ToListAsync();
@@ -41,7 +41,7 @@ namespace StarWars.Data.EntityFramework.Repositories
             return query.ToListAsync();
         }
 
-        public virtual Task<TEntity> Get(TKey id)
+        public Task<TEntity> Get(TKey id)
         {
             _logger.LogInformation("Get {type} with id = {id}", typeof(TEntity).Name, id);
             return _db.Set<TEntity>().SingleOrDefaultAsync(c => c.Id.Equals(id));
@@ -61,7 +61,7 @@ namespace StarWars.Data.EntityFramework.Repositories
             return query.SingleOrDefaultAsync(c => c.Id.Equals(id));
         }
 
-        public virtual TEntity Add(TEntity entity)
+        public TEntity Add(TEntity entity)
         {
             _db.Set<TEntity>().Add(entity);
             return entity;
@@ -72,9 +72,9 @@ namespace StarWars.Data.EntityFramework.Repositories
             _db.Set<TEntity>().AddRange(entities);
         }
 
-        public virtual void Delete(TKey id)
+        public void Delete(TKey id)
         {
-            var entity = new TEntity { Id = id };
+            var entity = new TEntity {Id = id};
             _db.Set<TEntity>().Attach(entity);
             _db.Set<TEntity>().Remove(entity);
         }
@@ -83,8 +83,8 @@ namespace StarWars.Data.EntityFramework.Repositories
         {
             return (await _db.SaveChangesAsync()) > 0;
         }
-
-        public virtual void Update(TEntity entity)
+        
+        public void Update(TEntity entity)
         {
             _db.Set<TEntity>().Attach(entity);
             _db.Entry(entity).State = EntityState.Modified;

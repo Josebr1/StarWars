@@ -1,5 +1,5 @@
-﻿using StarWars.Core.Data;
 using System.Collections.Generic;
+using StarWars.Core.Data;
 
 namespace StarWars.Core.Models
 {

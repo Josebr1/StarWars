@@ -1,4 +1,4 @@
-﻿using StarWars.Core.Models;
+using StarWars.Core.Models;
 
 namespace StarWars.Core.Data
 {

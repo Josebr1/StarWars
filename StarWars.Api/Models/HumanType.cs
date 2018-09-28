@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using GraphQL.Types;
@@ -14,7 +14,7 @@ namespace StarWars.Api.Models
 
             Field(h => h.Id).Description("The id of the human.");
             Field(h => h.Name, nullable: true).Description("The name of the human.");
-
+            
             Field<ListGraphType<CharacterInterface>>(
                 "friends",
                 resolve: context =>
@@ -24,7 +24,7 @@ namespace StarWars.Api.Models
                     return mapped;
                 }
             );
-
+            
             Field<ListGraphType<EpisodeEnum>>(
                 "appearsIn",
                 "Which movie they appear in.",
@@ -35,7 +35,7 @@ namespace StarWars.Api.Models
                     return episodeEnums;
                 }
             );
-
+            
             Field(h => h.HomePlanet, nullable: true).Description("The home planet of the human.");
 
             Interface<CharacterInterface>();

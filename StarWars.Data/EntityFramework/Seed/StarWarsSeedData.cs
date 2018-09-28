@@ -1,4 +1,4 @@
-﻿using StarWars.Core.Models;
+using StarWars.Core.Models;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

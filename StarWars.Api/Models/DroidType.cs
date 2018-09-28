@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -12,10 +11,10 @@ namespace StarWars.Api.Models
         {
             Name = "Droid";
             Description = "A mechanical creature in the Star Wars universe.";
-
+            
             Field(x => x.Id).Description("The Id of the Droid.");
             Field(x => x.Name, nullable: true).Description("The name of the Droid.");
-
+            
             Field<ListGraphType<CharacterInterface>>(
                 "friends",
                 resolve: context =>
@@ -25,19 +24,18 @@ namespace StarWars.Api.Models
                     return mapped;
                 }
             );
-
+            
             Field<ListGraphType<EpisodeEnum>>(
-                 "appearsIn",
-                 "Which movie they appear in.",
-                 resolve: context =>
-                 {
-                     var episodes = characterRepository.GetEpisodes(int.Parse(context.Source.Id)).Result;
-                     var episodeEnums = episodes.Select(y => (Episodes)y.Id).ToArray();
-                     return episodeEnums;
-                 }
-             );
-
-
+                "appearsIn",
+                "Which movie they appear in.",
+                resolve: context =>
+                {
+                    var episodes = characterRepository.GetEpisodes(int.Parse(context.Source.Id)).Result;
+                    var episodeEnums = episodes.Select(y => (Episodes)y.Id).ToArray();
+                    return episodeEnums;
+                }
+            );
+            
             Field(d => d.PrimaryFunction, nullable: true).Description("The primary function of the droid.");
 
             Interface<CharacterInterface>();

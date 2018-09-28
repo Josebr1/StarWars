@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StarWars.Core.Data
 {
-    public interface IBaseRepository<TEntity, in TKey>
-        where TEntity : class
+    public interface IBaseRepository<TEntity, in TKey> where TEntity : class
     {
         Task<List<TEntity>> GetAll();
         Task<List<TEntity>> GetAll(string include);

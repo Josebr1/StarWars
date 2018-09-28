@@ -1,4 +1,4 @@
-﻿namespace StarWars.Core.Data
+namespace StarWars.Core.Data
 {
     public interface IEntity<TKey>
     {

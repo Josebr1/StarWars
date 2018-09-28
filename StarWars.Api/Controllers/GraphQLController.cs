@@ -1,41 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StarWars.Api.Models;
-using System.Threading.Tasks;
 
 namespace StarWars.Api.Controllers
 {
     [Route("graphql")]
-    public class GraphQLController : Controller
+    public class GraphQLController : ControllerBase
     {
         private IDocumentExecuter _documentExecuter { get; set; }
         private ISchema _schema { get; set; }
         private readonly ILogger _logger;
 
-        public GraphQLController(IDocumentExecuter documentExecuter, ISchema schema, ILogger<GraphQLController> logger)
+        public GraphQLController(IDocumentExecuter documentExecuter, ISchema schema, ILogger logger)
         {
             _documentExecuter = documentExecuter;
             _schema = schema;
             _logger = logger;
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            _logger.LogInformation("Got request for GraphiQL. Sending GUI back");
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
-            if (query == null) { throw new ArgumentNullException(nameof(query)); }
+            if (query == null) {throw new ArgumentNullException(nameof(query));}
 
-            var executionOptions = new ExecutionOptions { Schema = _schema, Query = query.Query };
+            var executionOptions = new ExecutionOptions {Schema = _schema, Query = query.Query};
 
             try
             {
